@@ -6,19 +6,15 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   --primary-color: #6941c6;
   --secondary-color: #7f56d9;
-  --color2: #D6BBFB;
-
-  --font-color-1: #4E5D78;
+  --color2: #d6bbfb;
+  --font-color-1: #4e5d78;
   --font-color-2: #404040;
-  --font-color-3: #B0B7C3;
+  --font-color-3: #b0b7c3;
 }

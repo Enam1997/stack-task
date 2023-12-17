@@ -176,7 +176,7 @@ const Users = () => {
                 </td>
                 <td className="px-6 py-4 border">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center rounded-md rounded-xl bg-green-50 px-2 py-1 text-xs font-medium text-green-700 leading-[18px] ring-1 ring-inset ring-green-600/20">
+                    <span className="inline-flex items-center rounded-xl bg-green-50 px-2 py-1 text-xs font-medium text-green-700 leading-[18px] ring-1 ring-inset ring-green-600/20">
                       {user.status}
                     </span>
                     <div className="ml-2">
