@@ -110,7 +110,7 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-[444px] h-[576px] p-[62px] flex-shrink-0 border border-solid border-gray-300 rounded-2xl p-8 bg-white shadow-xl">
+      <div className="w-[444px] h-[576px] p-[62px] flex-shrink-0 border border-solid border-gray-300 rounded-2xl bg-white shadow-xl">
         <div className="flex items-center mb-[22px]">
           <img src={logo2} alt="" className=" w-[50px] h-[44px] mr-[11px]" />{" "}
           <h2 className="text-2xl font-bold mb-4 text-font-color-1">Stack</h2>
