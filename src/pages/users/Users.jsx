@@ -91,7 +91,7 @@ const Users = () => {
         </h1>
         <div className="flex">
           <LeftIconButton
-            butoonText={"Previous"}
+            butoonText={"Import"}
             fontSize={"text-sm"}
             paddingX={"px-3.5"}
             paddingY={"py-2"}

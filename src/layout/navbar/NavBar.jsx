@@ -78,7 +78,7 @@ const NavBar = () => {
                   {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
                   <img
                     src={iconsearch}
-                    className="h-6 w-6"
+                    className="h-5 w-5"
                     aria-hidden="true"
                     alt=""
                   />
@@ -92,7 +92,7 @@ const NavBar = () => {
                   {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
                   <img
                     src={iconsettings}
-                    className="h-6 w-6"
+                    className="h-5 w-5"
                     aria-hidden="true"
                     alt=""
                   />
@@ -106,7 +106,7 @@ const NavBar = () => {
                   {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
                   <img
                     src={iconalerm}
-                    className="h-6 w-6"
+                    className="h-5 w-5"
                     aria-hidden="true"
                     alt=""
                   />
