@@ -9,8 +9,6 @@ import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Routes>
       <Route

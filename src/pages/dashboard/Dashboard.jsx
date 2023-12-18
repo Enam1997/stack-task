@@ -1,5 +1,8 @@
 import React from "react";
 import NavBar from "../../layout/navbar/NavBar";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../feature/user-auth/UserSlice";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const cureentMonthStatus = [
@@ -29,6 +32,14 @@ const Dashboard = () => {
       totalSale: "$240.94",
     },
   ];
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/signin");
+  };
 
   return (
     <div>

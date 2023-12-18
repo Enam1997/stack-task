@@ -7,7 +7,9 @@ import {
   iconsettings,
   iconalerm,
 } from "../../assets/icons/all-icon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../feature/user-auth/UserSlice";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -22,7 +24,18 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+
 const NavBar = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/signin");
+  };
+
+
   return (
     <Disclosure as="nav" className="bg-primary-color">
       {({ open }) => (
@@ -163,15 +176,15 @@ const NavBar = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <button
                             href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
+                            className=" w-full px-4 py-2 text-sm  text-red-400 text-left"
+                            onClick={() => {
+                              handleLogout();
+                            }}
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>

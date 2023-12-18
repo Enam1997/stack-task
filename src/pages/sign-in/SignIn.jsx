@@ -2,13 +2,22 @@ import React, { useState } from "react";
 import logo2 from "../../assets/logo2.png";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../feature/user-auth/UserSlice";
 
 const SignIn = () => {
+  // states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+
+  // redux state
+  const { loading, error } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -26,6 +35,8 @@ const SignIn = () => {
       setEmailError("This field is required");
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
       setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError(null);
     }
   };
 
@@ -35,20 +46,42 @@ const SignIn = () => {
       setPasswordError("This field is required");
     } else if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters long");
-    } else if (
-      !/\d/.test(password) ||
-      !/[a-zA-Z]/.test(password) ||
-      !/[!@#$%^&*(),.?":{}|<>]/.test(password)
-    ) {
-      setPasswordError(
-        "Please include number, alphabet, and # in your password"
-      );
+    } else {
+      setPasswordError(null);
     }
+
+    // else if (
+    //   !/\d/.test(password) ||
+    //   !/[a-zA-Z]/.test(password) ||
+    //   !/[!@#$%^&*(),.?":{}|<>]/.test(password)
+    // ) {
+    //   setPasswordError(
+    //     "Please include number, alphabet, and # in your password"
+    //   );
+    // }
   };
 
   const handleSignIn = () => {
     validateEmail();
     validatePassword();
+
+    if (emailError == null && passwordError == null) {
+      let userCredential = {
+        email,
+        password,
+      };
+
+      console.log(userCredential);
+      dispatch(loginUser(userCredential)).then((result) => {
+        if (result.payload) {
+          console.log("check data");
+          console.log(result.payload);
+          setEmail("");
+          setPassword("");
+          navigate("/");
+        }
+      });
+    }
 
     // Additional logic for signing up if needed
   };
@@ -93,7 +126,7 @@ const SignIn = () => {
         {/* Sign Up Button */}
 
         <Button
-          butoonText={"Sign In"}
+          butoonText={loading ? "Loading" : "Sign In"}
           fontSize={"text-base"}
           fontWeight={"font-semibold"}
           paddingY={"py-2"}
@@ -103,6 +136,8 @@ const SignIn = () => {
           fontColor={"text-white"}
           onClickFunction={handleSignIn}
         />
+
+        {error && <div>{error}</div>}
 
         {/* Already have an account text */}
         <p className="mt-[27px] text-base text-font-color-3 text-gray-600">
