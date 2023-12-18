@@ -24,7 +24,7 @@ const Dashboard = () => {
       totalSale: "$240.94",
     },
     {
-      id: 4,
+      id: 5,
       title: "Profit",
       totalSale: "$240.94",
     },
