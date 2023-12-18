@@ -11,47 +11,52 @@ import Button from "../../components/button/Button";
 import NavBar from "../../layout/navbar/NavBar";
 import LeftIconButton from "../../components/button/LeftIconButton";
 
+import { useGetUsersQuery } from "../../feature/users-slice/usersSlice";
+
 const Users = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const users = [
-    {
-      id: 1,
-      name: "User1",
-      email: "user1@example.com",
-      about: "About User1",
-      status: "Random Sticker Label",
-    },
-    {
-      id: 2,
-      name: "User1",
-      email: "user1@example.com",
-      about: "About User1",
-      status: "Customer",
-    },
-    {
-      id: 3,
-      name: "User1",
-      email: "user1@example.com",
-      about: "About User1",
-      status: "Customer",
-    },
-    {
-      id: 4,
-      name: "User1",
-      email: "user1@example.com",
-      about: "About User1",
-      status: "Customer",
-    },
-    {
-      id: 5,
-      name: "User1",
-      email: "user1@example.com",
-      about: "About User1",
-      status: "Customer",
-    },
-    // Add more user data here
-  ];
+  // const users = [
+  //   {
+  //     id: 1,
+  //     name: "User1",
+  //     email: "user1@example.com",
+  //     about: "About User1",
+  //     status: "Random Sticker Label",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "User1",
+  //     email: "user1@example.com",
+  //     about: "About User1",
+  //     status: "Customer",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "User1",
+  //     email: "user1@example.com",
+  //     about: "About User1",
+  //     status: "Customer",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "User1",
+  //     email: "user1@example.com",
+  //     about: "About User1",
+  //     status: "Customer",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "User1",
+  //     email: "user1@example.com",
+  //     about: "About User1",
+  //     status: "Customer",
+  //   },
+  //   // Add more user data here
+  // ];
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, error, isLoading } = useGetUsersQuery(currentPage);
 
   useEffect(() => {
     // Set selectAll to true when at least one user is selected
@@ -61,7 +66,7 @@ const Users = () => {
   const toggleSelectAll = () => {
     setSelectAll((prevSelectAll) => !prevSelectAll);
     if (!selectAll) {
-      setSelectedUsers(users.map((user) => user.id));
+      setSelectedUsers(data?.data?.map((user) => user.id));
     } else {
       setSelectedUsers([]);
     }
@@ -80,6 +85,19 @@ const Users = () => {
         return [...prevSelected, userId];
       }
     });
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < data?.total_pages) {
+      // Increase the page number
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1); // Decrease the page number (if greater than 1)
+    }
   };
 
   return (
@@ -139,7 +157,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {data?.data?.map((user) => (
               <tr key={user.id}>
                 <td className=" px-6 py-4 border">
                   <div className="flex items-center">
@@ -150,13 +168,13 @@ const Users = () => {
                     />
                     <img
                       // src={`user-image-path/${user.id}.jpg`}
-                      src={demoImage}
+                      src={user.avatar}
                       alt={`User ${user.name}`}
                       className="w-8 h-8 rounded-full mx-3"
                     />
                     <div className="ml-2 flex flex-col">
                       <div className="text-sm font-medium leading-5 text-gray-900 ">
-                        {user.name}
+                        {user.first_name + " " + user.last_name}
                       </div>
                       <div className="text-sm font-normal leading-5 text-gray-500">
                         {user.email}
@@ -167,17 +185,18 @@ const Users = () => {
                 <td className="px-6 py-4 border">
                   <div className="ml-2 flex flex-col">
                     <div className="text-sm font-normal leading-5 text-gray-900 ">
-                      {user.name}
+                      Some dummy Content
                     </div>
                     <div className="text-sm font-normal leading-5 text-gray-500">
-                      {user.email}
+                      Brings all your news into one place
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 border">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center rounded-xl bg-green-50 px-2 py-1 text-xs font-medium text-green-700 leading-[18px] ring-1 ring-inset ring-green-600/20">
-                      {user.status}
+                      {/* {user.status} */}
+                      customer
                     </span>
                     <div className="ml-2">
                       <button className=" w-5 h-5 mr-[10px]">
@@ -204,8 +223,11 @@ const Users = () => {
             borderRadius={"rounded-lg"}
             shadow={"shadow-sm"}
             background={"bg-white"}
+            onClickFunction={handlePreviousPage}
           />
-          <div>Page 1 of 10</div>
+          <div>
+            Page {currentPage} of {data?.total_pages}
+          </div>
           <Button
             butoonText={"Next"}
             fontSize={"text-sm"}
@@ -215,6 +237,7 @@ const Users = () => {
             borderRadius={"rounded-lg"}
             shadow={"shadow-sm"}
             background={"bg-white"}
+            onClickFunction={handleNextPage}
           />
         </div>
       </div>

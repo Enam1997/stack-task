@@ -14,7 +14,7 @@ import { logoutUser } from "../../feature/user-auth/UserSlice";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Users", href: "/users", current: false },
-  { name: "Projects", href: "#", current: false },
+  { name: "Projects", href: "/projects", current: false },
   { name: "Calendar", href: "#", current: false },
   { name: "Tasks", href: "#", current: false },
   { name: "Reporting", href: "#", current: false },

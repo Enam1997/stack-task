@@ -13,10 +13,11 @@ const Button = ({
   width,
   height,
   fontColor,
-  onClickFunction
+  onClickFunction,
+  buttonDisable
 }) => {
   return (
-    <button
+    <button disabled={buttonDisable}
       className={`${fontSize} ${fontWeight} ${paddingX} ${paddingY} ${border} ${borderRadius} ${shadow} ${background} ${width} ${height} ${fontColor}  `} onClick={onClickFunction}
     >
       {butoonText}

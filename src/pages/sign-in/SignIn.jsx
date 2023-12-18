@@ -65,7 +65,12 @@ const SignIn = () => {
     validateEmail();
     validatePassword();
 
-    if (emailError == null && passwordError == null) {
+    if (
+      emailError == null &&
+      passwordError == null &&
+      email !== "" &&
+      password !== ""
+    ) {
       let userCredential = {
         email,
         password,
@@ -135,6 +140,7 @@ const SignIn = () => {
           width={"w-full"}
           fontColor={"text-white"}
           onClickFunction={handleSignIn}
+          buttonDisable={loading}
         />
 
         {error && <div>{error}</div>}
