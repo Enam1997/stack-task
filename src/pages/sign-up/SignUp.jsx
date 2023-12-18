@@ -2,13 +2,21 @@ import React, { useState } from "react";
 import logo2 from "../../assets/logo2.png";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser } from "../../feature/user-auth/UserRegistrationSlice";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  // redux state
+
+  const { loading, error } = useSelector((state) => state.usersignup);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -102,8 +110,34 @@ const SignUp = () => {
   };
 
   const handleSignUp = () => {
+    console.log("clicked");
     validateEmail();
     validatePassword();
+
+    if (
+      emailError == null &&
+      passwordError == null &&
+      email !== "" &&
+      password !== ""
+    ) {
+      let userCredential = {
+        email,
+        password,
+      };
+
+      console.log(userCredential);
+      dispatch(signUpUser(userCredential)).then((result) => {
+        if (result.payload) {
+          console.log("check data");
+          console.log(result.payload);
+          setEmail("");
+          setPassword("");
+          navigate("/");
+        }
+      });
+    }
+
+    console.log("completed");
 
     // Additional logic for signing up if needed
   };
@@ -158,7 +192,7 @@ const SignUp = () => {
         {/* Sign Up Button */}
 
         <Button
-          butoonText={"Sign Up"}
+          butoonText={loading ? "Loading" : "Sign Up"}
           fontSize={"text-base"}
           fontWeight={"font-semibold"}
           paddingY={"py-2"}
